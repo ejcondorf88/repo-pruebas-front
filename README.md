@@ -381,6 +381,117 @@ open target/site/serenity/index.html
 
 ---
 
+## 🐛 Bug Lifecycle
+
+Este proyecto documenta bugs encontrados durante las pruebas E2E con un formato estructurado.
+
+### Formato de Bug Report
+
+```markdown
+## Bug: [Título corto]
+
+### Información General
+| Campo | Valor |
+|-------|-------|
+| **Estado** | Open / In Progress / Resolved / Won't Fix |
+| **Severidad** | Critical / High / Medium / Low |
+| **Tipo** | Backend / Frontend / Validación / UI |
+| **Fecha Reporte** | YYYY-MM-DD |
+| **Tags** | @bug, @severidad-tipo |
+
+### Descripción
+Descripción clara del problema.
+
+### Pasos para Reproducir
+1. Paso 1
+2. Paso 2
+3. Paso 3
+
+### Resultado Esperado
+Qué debería pasar.
+
+### Resultado Actual
+Qué está pasando actualmente.
+
+### Evidencia
+- Logs de error
+- Screenshots
+- Mensajes de la consola
+
+### Análisis
+- Posible causa raíz
+- Dónde ocurre el problema
+
+### Solución Propuesta
+Cómo debería arreglarse.
+
+### Notas Adicionales
+- Workarounds temporales
+- Notas de contexto
+```
+
+---
+
+## 🐛 Bugs Registrados
+
+### BUG-001: Falta validación de fecha de nacimiento futura
+
+| Campo | Valor |
+|-------|-------|
+| **Estado** | Open |
+| **Severidad** | Medium |
+| **Tipo** | Validación / Backend |
+| **Fecha Reporte** | 2026-04-07 |
+| **Tags** | @bug, @validacion, @fecha |
+
+#### Descripción
+El sistema no valida que la fecha de nacimiento de la mascota no sea futura. Permite registrar mascotas con fecha de nacimiento en el futuro (ej: 2030-01-01).
+
+#### Pasos para Reproducir
+1. Iniciar sesión como admin
+2. Navegar a `/mascotas/nueva`
+3. Completar información básica con fecha de nacimiento futura (ej: 2030-01-01)
+4. Hacer click en "Siguiente"
+5. Observar que NO aparece mensaje de error
+
+#### Resultado Esperado
+El sistema debería mostrar mensaje de error: "La fecha no puede ser futura"
+
+#### Resultado Actual
+El sistema permite avanzar al siguiente paso sin validar la fecha.
+
+#### Evidencia
+- Test: `registrar_mascota.feature` - Escenario `@negative`
+- Step: `intenta ir al siguiente paso`
+- Error: `no matching element found by [mensaje de error]`
+
+#### Análisis
+- La validación de fecha futura no está implementada ni en frontend ni en backend
+- El campo `fecha_nacimiento` acepta cualquier valor incluyendo fechas futuras
+- Se requiere agregar validación tanto en el form (React) como en la API (backend)
+
+#### Solución Propuesta
+1. **Frontend**: Agregar validación en el componente de registro de mascota
+   ```javascript
+   // Validar que la fecha no sea futura
+   if (new Date(fechaNacimiento) > new Date()) {
+     setError('La fecha no puede ser futura');
+   }
+   ```
+
+2. **Backend**: Agregar validación en el endpoint de creación de mascota
+   ```java
+   if (fechaNacimiento.isAfter(LocalDate.now())) {
+     throw new ValidationException("La fecha no puede ser futura");
+   }
+   ```
+
+#### Notas Adicionales
+- Test skipeado con tag `@skip` hasta que se corrija
+- Ubicación del test: `src/test/resources/features/mascota/registrar_mascota.feature:36`
+
+---
+
 ## 🧩 Conceptos Clave
 
 ### 1. Models (Builder Pattern)
