@@ -4,7 +4,6 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Open;
-import net.serenitybdd.screenplay.actions.Refresh;
 import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
@@ -12,6 +11,7 @@ import static targets.LoginTargets.CAMPO_EMAIL;
 
 /**
  * Task para navegar a la página de login.
+ * Nota: Usa URL absoluta porque el test no tiene sesión
  */
 public class NavegarALogin implements Task {
 
@@ -24,10 +24,7 @@ public class NavegarALogin implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                // Navegar a la URL
                 Open.url(URL_LOGIN),
-                
-                // Esperar a que la página cargue completamente
                 WaitUntil.the(CAMPO_EMAIL, WebElementStateMatchers.isVisible())
                         .forNoMoreThan(30).seconds()
         );
