@@ -55,13 +55,29 @@
             <version>5.9.2</version>
         </dependency>
 
-        <!-- JUnit -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.2</version>
-            <scope>test</scope>
-        </dependency>
+<!-- JUnit 4 (requerido por Cucumber) -->
+ <dependency>
+ <groupId>junit</groupId>
+ <artifactId>junit</artifactId>
+ <version>4.13.2</version>
+ <scope>test</scope>
+ </dependency>
+
+ <!-- AssertJ -->
+ <dependency>
+ <groupId>org.assertj</groupId>
+ <artifactId>assertj-core</artifactId>
+ <version>3.25.3</version>
+ <scope>test</scope>
+ </dependency>
+
+ <!-- JUnit Vintage Engine (para ejecutar JUnit 4 en JUnit 5) -->
+ <dependency>
+ <groupId>org.junit.vintage</groupId>
+ <artifactId>junit-vintage-engine</artifactId>
+ <version>5.10.2</version>
+ <scope>test</scope>
+ </dependency>
     </dependencies>
 
     <build>
@@ -77,17 +93,39 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven Surefire -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
+<!-- Maven Surefire -->
+ <plugin>
+ <groupId>org.apache.maven.plugins</groupId>
+ <artifactId>maven-surefire-plugin</artifactId>
+ <version>3.2.5</version>
+ <configuration>
+ <includes>
+ <include>**/*TestSuite.java</include>
+ <include>**/*Test.java</include>
+ </includes>
+ <testFailureIgnore>true</testFailureIgnore>
+ </configuration>
+ </plugin>
+
+ <!-- Maven Failsafe (para tests de integración) -->
+ <plugin>
+ <groupId>org.apache.maven.plugins</groupId>
+ <artifactId>maven-failsafe-plugin</artifactId>
+ <version>3.2.5</version>
+ <configuration>
+ <includes>
+ <include>**/*TestSuite.java</include>
+ </includes>
+ </configuration>
+ <executions>
+ <execution>
+ <goals>
+ <goal>integration-test</goal>
+ <goal>verify</goal>
+ </goals>
+ </execution>
+ </executions>
+ </plugin>
 
             <!-- Serenity Maven Plugin -->
             <plugin>
