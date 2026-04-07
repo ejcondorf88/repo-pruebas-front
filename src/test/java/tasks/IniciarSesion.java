@@ -35,8 +35,8 @@ public class IniciarSesion implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Enter.theValue(usuario.getEmail())
-                        .into(CAMPO_USUARIO),
+Enter.theValue(usuario.getEmail())
+ .into(CAMPO_EMAIL),
                 Enter.theValue(usuario.getPassword())
                         .into(CAMPO_PASSWORD),
                 Click.on(BOTON_LOGIN)
