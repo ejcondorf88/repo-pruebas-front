@@ -1,0 +1,248 @@
+# ===========================================
+# 🎯 .gitignore - Serenity BDD Screenplay
+# ===========================================
+# Este archivo define qué archivos/carpetas NO se deben subir al repositorio
+# Generado automáticamente para proyecto de tests Serenity BDD con Maven
+
+# ===========================================
+# 🔧 Maven / Build
+# ===========================================
+# Archivos compilados y dependencias descargadas
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ===========================================
+# ☕ Java / JVM
+# ===========================================
+# Archivos de compilación Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+
+# Directorio de trabajo de IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Directorio de trabajo de Eclipse
+.classpath
+.project
+.settings/
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+netscape/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# ===========================================
+# 🧪 Serenity BDD Reports
+# ===========================================
+# Reportes generados automáticamente
+target/site/
+target/serenity/
+target/cucumber-reports/
+target/surefire-reports/
+target/surefire/
+target/test-output/
+target/junit-reports/
+target/html-reports/
+target/json-reports/
+target/xml-reports/
+
+# Screenshots de tests (pueden ser muy grandes)
+target/screenshots/
+**/screenshots/
+
+# ===========================================
+# 🌐 WebDriver / Selenium
+# ===========================================
+# WebDrivers descargados automáticamente
+webdriver/
+webdrivers/
+drivers/
+selenium-downloads/
+
+# Chrome driver (si se maneja manualmente)
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
+msedgedriver
+iedriverserver.exe
+
+# Cookies y sesiones de browser
+cookies.dat
+session.json
+
+# ===========================================
+# 🐛 Debug / Logs
+# ===========================================
+# Archivos de log
+*.log
+logs/
+*.log.*
+debug/
+trace/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# ===========================================
+# 🔐 Credenciales / Secrets
+# ===========================================
+# NO SUBIR - Archivos con contraseñas o keys
+*.properties
+!src/test/resources/serenity.properties.example
+*.env
+.env.local
+.env.*.local
+credentials.json
+secrets.yaml
+secrets.properties
+apikeys.properties
+
+# Archivos de configuración con datos sensibles
+config-local.properties
+test-config.properties
+
+# ===========================================
+# 📱 OS Specific
+# ===========================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Icon?
+.__MACOSX
+
+# Linux
+*.swp
+*.swo
+*~
+.cache/
+.config/
+.local/
+.xauth*
+
+# ===========================================
+# 📦 Dependencies (opcional - si usas Maven local)
+# ===========================================
+# repo-pruebas-front/lib/      # Librerías locales
+# repo-pruebas-front/ext/      # Extensiones
+
+# ===========================================
+# 🧪 Test Results (opcional)
+# ===========================================
+# Alguns equipos prefieren no guardar resultados de tests
+test-results/
+integration-tests-results/
+e2e-test-results/
+
+# ===========================================
+# 🤖 OpenCode / GentleAI (opcional)
+# ===========================================
+# Archivos de configuración de OpenCode (si contiene datos sensibles)
+.opencode/
+.opencode/*.
+atl/
+.atl/
+!atl/.gitkeep
+
+# Memoria Engram (puede contener contexto sensible)
+.engram/
+engram-data/
+
+# ===========================================
+# 🔄 IDE / Editor Config
+# ===========================================
+# Archivos de configuración de IDE
+.idea/
+.vscode/
+*.sublime-*
+.project
+.classpath
+
+# ===========================================
+# ⚠️ Excepciones - NO ignorar
+# ===========================================
+# Estos archivos SIEMPRE deben subirse:
+# pom.xml                    - Dependencias del proyecto
+# serenity.properties        - Configuración de Serenity
+# src/test/                  - Código fuente de tests
+# src/test/resources/        - Features y recursos
+
+# ===========================================
+# 📝 Notas
+# ===========================================
+# - Si necesitas credenciales, usa variables de entorno o un archivo .env.example
+# - Los reportes en target/ se regeneran en cada build
+# - Los archivos .class se regeneran con mvn compile
+# - Los WebDrivers se descargan automáticamente con webdriver.autodownload=true
+
+# ===========================================
+# 🔧 Ejemplo de serenity.properties para NO subir
+# ===========================================
+# Si tienes archivos con credenciales, crea versiones ejemplo:
+#   serenity.properties.example  (sin datos sensibles)
+#   src/test/resources/serenity.properties.example
+
+# ===========================================
+# 🧹 Limpiar antes de commit
+# ===========================================
+# Antes de hacer commit, puedes ejecutar:
+# mvn clean                    # Limpia target/
+# git status                   # Ver qué archivos se subirán
+
+# ===========================================
+# ✅ Plantilla para nuevo desarrollador
+# ===========================================
+# 1. Clonar el repo
+# 2. Ejecutar `mvn clean install -DskipTests`  # Descarga dependencias
+# 3. Ejecutar `mvn test`  # Verificar que funciona
+# 4. ¡Listo para empezar a escribir tests!
