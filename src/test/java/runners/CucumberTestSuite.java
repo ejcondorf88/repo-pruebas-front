@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
-        features = "src/test/resources/features/familia/registro_cuenta.feature",
+        features = "src/test/resources/features/familia",
         glue = {"stepdefinitions", "hooks"},
         plugin = {
                 "pretty",
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
         },
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         monochrome = true,
-        tags = "@negative or @edge"
+        tags = "@happy-path"
 )
 public class CucumberTestSuite {
 }
