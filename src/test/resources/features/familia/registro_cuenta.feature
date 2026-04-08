@@ -28,4 +28,4 @@ Característica: Registro de nueva familia (cuenta)
   Escenario: Usuario intenta registrar con password débil
     Dado que el usuario está en la página de registro
     Cuando registra una cuenta con email "test+debil789@test.com" y password "12345678" y confirmación "12345678"
-   Entonces debería ver mensaje de error de registro "Mínimo 8 caracteres"
+    Entonces debería ver mensaje de error de registro "La contraseña debe incluir"

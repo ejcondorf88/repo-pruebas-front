@@ -492,6 +492,66 @@ El sistema permite avanzar al siguiente paso sin validar la fecha.
 
 ---
 
+### BUG-002: Falta validación de email existente en registro
+
+| Campo | Valor |
+|-------|-------|
+| **Estado** | Open |
+| **Severidad** | Medium |
+| **Tipo** | Validación / Backend |
+| **Fecha Reporte** | 2026-04-07 |
+| **Tags** | @bug, @validacion, @registro |
+
+#### Descripción
+El sistema no valida que el email ya esté registrado en la base de datos. Cuando un usuario intenta registrar una cuenta con un email que ya existe (como "admin@pettech.com"), el sistema permite el registro sin mostrar mensaje de error.
+
+#### Pasos para Reproducir
+1. Navegar a la página de registro (http://localhost/registro)
+2. Completar el formulario con email existente "admin@pettech.com"
+3. Completar password y confirmación "Password123!"
+4. Hacer click en "Siguiente"
+5. Observar que NO aparece mensaje de error - el registro se procesa
+
+#### Resultado Esperado
+El sistema debería mostrar mensaje de error: "El correo ya está registrado"
+
+#### Resultado Actual
+El sistema permite el registro sin validar si el email ya existe en la base de datos.
+
+#### Evidencia
+- Test: `registro_cuenta.feature` - Escenario `@negative` "Usuario intenta registrar con email existente"
+- Step: `debería ver mensaje de error de registro "El correo ya está registrado"`
+- Error: `no matching element found by [mensaje de error]`
+
+#### Análisis
+- No hay validación en el backend para verificar si el email ya existe
+- El endpoint de registro acepta cualquier email sin verificar duplicados
+- Se requiere agregar validación en el frontend y backend
+
+#### Solución Propuesta
+1. **Backend**: Agregar validación en el endpoint de registro
+   ```java
+   // Verificar si el email ya existe
+   if (usuarioRepository.findByEmail(email).isPresent()) {
+       throw new ValidationException("El correo ya está registrado");
+   }
+   ```
+
+2. **Frontend**: Agregar validación en el componente de registro
+   ```javascript
+   // Validar que el email no esté en uso antes de enviar
+   const existeEmail = await checkEmailExists(email);
+   if (existeEmail) {
+       setError('El correo ya está registrado');
+   }
+   ```
+
+#### Notas Adicionales
+- Test deshabilitado temporalmente (sin @skip tag ahora)
+- Ubicación del test: `src/test/resources/features/familia/registro_cuenta.feature:16`
+
+---
+
 ## 🧩 Conceptos Clave
 
 ### 1. Models (Builder Pattern)

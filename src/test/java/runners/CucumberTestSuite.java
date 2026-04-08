@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
         },
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         monochrome = true,
-        tags = "@happy-path"
+        tags = "@negative or @edge"
 )
 public class CucumberTestSuite {
 }
