@@ -17,6 +17,7 @@ Proyecto de pruebas automatizadas usando **Serenity BDD**, **Screenplay Pattern*
 - [SDD - Spec-Driven Development](#-sdd---spec-driven-development)
 - [OpenCode + GentleAI + Engram](#-opencode--gentleai--engram)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Casos de Prueba (Features)](#-casos-de-prueba-features)
 - [Instalación](#-instalación)
 - [Cómo Ejecutar](#-cómo-ejecutar)
 - [Comandos Útiles](#-comandos-útiles)
@@ -266,9 +267,118 @@ serenity-screenplay/
         │
         └── resources/
             └── features/               ← 📝 Archivos Gherkin
-                └── login/
-                    └── login.feature   ← Escenarios de prueba
+                     └── login/
+                         └── login.feature   ← Escenarios de prueba
 ```
+
+---
+
+## 📋 Casos de Prueba (Features)
+
+A continuación se detallan todos los flujos de prueba implementados en el proyecto:
+
+### 1. Login (Autenticación)
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `login.feature` | `src/test/resources/features/login/` | Pruebas de autenticación |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Usuario válido puede iniciar sesión | @smoke | ✅ PASS | Login exitoso con credenciales correctas |
+| Usuario con credenciales inválidas | @negative | ✅ PASS | Error al usar credenciales incorrectas |
+
+---
+
+### 2. Registro de Cuenta (Familia)
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `registro_cuenta.feature` | `src/test/resources/features/familia/` | Registro de nuevas cuentas |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Usuario registra una cuenta exitosamente | @smoke @happy-path | ✅ PASS | Registro con email nuevo |
+| Passwords que no coinciden | @negative | ✅ PASS | Validación de coincidencia de passwords |
+| Password débil | @edge | ✅ PASS | Validación de fortaleza de password |
+| Email existente | @negative @skip | ⏭️ SKIPPED | BUG-002 - No hay validación en backend |
+
+---
+
+### 3. Registrar Mascota
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `registrar_mascota.feature` | `src/test/resources/features/mascota/` | Registro de mascotas |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Registrar mascota exitosamente | @smoke @happy-path | ✅ PASS | Registro completo de mascota |
+| Edge case: hamster con 0.05kg | @edge | ✅ PASS | Peso mínimo aceptado |
+| Fecha de nacimiento futura | @negative @skip | ⏭️ SKIPPED | BUG-001 - No hay validación de fecha futura |
+
+---
+
+### 4. Gestionar Solicitudes (Admin)
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `gestionar_solicitudes.feature` | `src/test/resources/features/solicitudes/` | Aprobación/rechazo de solicitudes |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Administrador aprueba una solicitud pendiente | @smoke @happy-path | ✅ PASS | Aprobación de solicitud de adopción |
+| Administrador rechaza una solicitud | @smoke | ✅ PASS | Rechazo de solicitud de adopción |
+| Rechazar sin notas | @negative | ⏭️ SKIPPED | Backend no valida notas obligatorias |
+
+---
+
+### 5. Completar Perfil - Información Básica
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `completar_perfil.feature` | `src/test/resources/features/familia/` | Step 2 del perfil |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Usuario completa información básica correctamente | @smoke @happy-path | ✅ PASS | Formulario completado correctamente |
+| Usuario intenta continuar sin campos obligatorios | @negative | ✅ PASS | Validación de campos requeridos |
+| Usuario intenta continuar solo con algunos campos | @negative | ✅ PASS | Validación parcial de campos |
+| Cédula muy corta | @edge | ✅ PASS | Validación de longitud de cédula |
+| Cédula muy larga | @edge | ✅ PASS | Validación de longitud máxima |
+| Fecha de nacimiento futura | @edge | ✅ PASS | Validación de fecha no futura |
+| Redes sociales con texto muy largo | @edge | ✅ PASS | Validación de longitud de texto |
+| Tipo de archivo no válido | @edge | ✅ PASS | Validación de tipos de archivo |
+| Archivo demasiado grande | @edge | ✅ PASS | Validación de tamaño de archivo |
+| Usuario puede volver al paso anterior | @smoke | ✅ PASS | Navegación entre pasos |
+
+---
+
+### 6. Flujo Completo Perfil (Step 2 + Step 3)
+
+| Feature | Path | Descripción |
+|---------|------|-------------|
+| `flujo_completo_perfil.feature` | `src/test/resources/features/familia/` | Perfil completo desde dashboard |
+
+#### Escenarios:
+| Escenario | Tag | Estado | Descripción |
+|-----------|-----|--------|-------------|
+| Usuario familia completa el perfil desde el dashboard | @smoke @happy-path | ✅ PASS | Flujo completo: Login → Step 2 → Step 3 → Guardar |
+| Usuario intenta guardar sin marcar acuerdo de responsabilidad | @negative | ✅ PASS | Validación de checkbox obligatorio |
+| Usuario puede volver del paso 3 al paso 2 | @edge | ✅ PASS | Navegación hacia atrás |
+
+#### Credenciales de Prueba:
+- **Email**: `eliansote@hotmail.es`
+- **Password**: `Pigo0173!`
+
+#### Mensajes de Éxito:
+- **Crear**: "Perfil adoptante completado"
+- **Actualizar**: "Perfil actualizado correctamente"
 
 ---
 
